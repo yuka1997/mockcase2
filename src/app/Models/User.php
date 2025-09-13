@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -32,6 +33,16 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function requests()
+    {
+        return $this->hasMany(Request::class);
+    }
 
     /**
      * The attributes that should be cast.
