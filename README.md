@@ -38,7 +38,7 @@ php artisan db:seed
 - Docker / Docker Compose
 
 ## ER図
-![ER図](./mockcase2.diagram.png)
+![ER図](mockcase2.drawio.png)
 
 ## URL
 - 開発環境: http://localhost/
