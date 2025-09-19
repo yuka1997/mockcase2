@@ -28,5 +28,7 @@ Route::post('/login', function (LoginRequest $request) {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/attendance', [AttendanceController::class, 'index']);
+    Route::post('/attendance', [AttendanceController::class, 'store']);
+
     Route::post('/logout', [AuthController::class, 'logout']);
 });

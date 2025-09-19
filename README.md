@@ -2,7 +2,7 @@
 
 ## 環境構築
 
-### Dockerビルド
+### Docker ビルド
 
 １． リポジトリをクローン
 
@@ -12,13 +12,13 @@ mv laravel-docker-template mockcase2
 cd mockcase2
 ```
 
-２．Docker起動
+２．Docker 起動
 
 ```bash
 docker-compose up -d --build
 ```
 
-### Laravel環境構築
+### Laravel 環境構築
 
 ```bash
 docker-compose exec php bash
@@ -37,9 +37,11 @@ php artisan db:seed
 - Nginx 1.21.1
 - Docker / Docker Compose
 
-## ER図
-![ER図](./mockcase2.diagram.png)
+## ER 図
+
+![ER図](mockcase2.drawio.png)
 
 ## URL
+
 - 開発環境: http://localhost/
 - phpMyAdmin: http://localhost:8080/
