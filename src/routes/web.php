@@ -6,6 +6,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Requests\LoginRequest;
+use App\Http\Controllers\RequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,12 @@ Route::post('/login', function (LoginRequest $request) {
 Route::middleware(['auth'])->group(function () {
     Route::get('/attendance', [AttendanceController::class, 'index']);
     Route::post('/attendance', [AttendanceController::class, 'store']);
+
+    Route::get('/attendance/list', [AttendanceController::class, 'list']);
+
+    Route::get('/attendance/detail/{id}', [AttendanceController::class, 'show']);
+
+    Route::get('/stamp_correction_request/list', [RequestController::class, 'index']);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 });

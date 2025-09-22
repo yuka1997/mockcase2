@@ -6,17 +6,18 @@
 
 @section('header-extra')
 <nav class="nav-menu">
-    <form method="POST" action="{{ url('/logout') }}">
+    <a href="/attendance" class="nav-menu__link">勤怠</a>
+    <a href="/attendance/list" class="nav-menu__link">勤怠一覧</a>
+    <a href="/stamp_correction_request/list" class="nav-menu__link">申請</a>
+    <form method="POST" action="/logout" class="nav-menu__form">
         @csrf
-        <button type="submit" class="logout-btn">ログアウト</button>
+        <button type="submit" class="nav-menu__link">ログアウト</button>
     </form>
 </nav>
 @endsection
 
 @section('content')
 <div class="attendance__content">
-
-    {{-- ステータス表示 --}}
     <div class="attendance__status">
         @if ($status === \App\Models\Attendance::STATUS_OFF)
             <span class="status__label status__label--off">勤務外</span>
@@ -29,7 +30,6 @@
         @endif
     </div>
 
-    {{-- 日付表示 --}}
     @php
     $today = now()->locale('ja');
     @endphp
@@ -39,12 +39,10 @@
     </div>
 
 
-    {{-- 時刻表示 --}}
     <div class="attendance__time">
         {{ now()->format('H:i') }}
     </div>
 
-    {{-- ボタンエリア --}}
     <form action="/attendance" method="POST" class="attendance__form">
         @csrf
         @if ($status === \App\Models\Attendance::STATUS_OFF)

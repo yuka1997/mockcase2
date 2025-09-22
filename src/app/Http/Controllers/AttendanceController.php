@@ -76,4 +76,25 @@ class AttendanceController extends Controller
         return redirect('/attendance');
     }
 
+    public function list(Request $request)
+    {
+        $month = $request->query('month', Carbon::now()->format('Y-m'));
+
+        $start = Carbon::parse($month)->startOfMonth();
+        $end   = Carbon::parse($month)->endOfMonth();
+
+        $attendances = Attendance::with('breaks')
+            ->where('user_id', Auth::id())
+            ->whereBetween('work_date', [$start, $end])
+            ->get()
+            ->keyBy('work_date');
+
+        $dates = collect();
+        for ($date = $start->copy(); $date->lte($end); $date->addDay()) {
+            $dates->push($date->copy());
+        }
+
+        return view('view', compact('attendances', 'dates', 'month'));
+    }
+
 }
