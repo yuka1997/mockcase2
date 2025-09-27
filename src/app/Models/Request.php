@@ -9,13 +9,15 @@ class Request extends Model
 {
     use HasFactory;
 
+    const STATUS_PENDING  = 0;
+    const STATUS_APPROVED = 1;
+    const STATUS_REJECTED = 2;
+
     protected $fillable = [
         'user_id',
         'attendance_id',
         'requested_clock_in',
         'requested_clock_out',
-        'requested_break_start',
-        'requested_break_end',
         'status',
         'requested_note',
     ];
@@ -29,4 +31,10 @@ class Request extends Model
     {
         return $this->belongsTo(Attendance::class);
     }
+
+    public function requestBreaks()
+    {
+        return $this->hasMany(RequestBreak::class);
+    }
+
 }

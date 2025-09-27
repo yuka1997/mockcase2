@@ -151,35 +151,3 @@
         padding: 6px 8px;
     }
 }
-
-@media screen and (min-width: 768px) and (max-width: 850px) {
-    .header__inner {
-        flex-wrap: nowrap;
-        padding: 10px 15px;
-    }
-
-    .header__logo img {
-        height: 28px;
-    }
-
-    .nav-menu {
-        gap: 10px;
-    }
-
-    .nav-menu__list {
-        gap: 10px;
-    }
-
-    .nav-menu__link {
-        font-size: 18px;
-        padding: 4px 6px;
-    }
-
-    .form__label {
-        font-size: 20px;
-    }
-
-    .form__button {
-        font-size: 22px;
-    }
-}

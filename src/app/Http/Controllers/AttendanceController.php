@@ -97,4 +97,12 @@ class AttendanceController extends Controller
         return view('view', compact('attendances', 'dates', 'month'));
     }
 
+    public function show($id)
+    {
+        $attendance = Attendance::with('breaks')->findOrFail($id);
+
+        return view('/detail', compact('attendance'));
+    }
+
+
 }

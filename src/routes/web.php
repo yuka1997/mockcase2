@@ -37,5 +37,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/stamp_correction_request/list', [RequestController::class, 'index']);
 
+    Route::post('/requests', [RequestController::class, 'store']);
+
     Route::post('/logout', [AuthController::class, 'logout']);
 });

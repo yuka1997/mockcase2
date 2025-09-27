@@ -39,14 +39,39 @@ body {
 }
 
 .month-nav__button {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     padding: 6px 14px;
     text-decoration: none;
     color: #737373;
     font-weight: 700;
 }
 
+.month-nav__arrow {
+    width: 20px;
+    height: 15px;
+    vertical-align: middle;
+    opacity: 0.3;
+}
+
+.month-nav__button:last-child .month-nav__arrow {
+    transform: rotate(180deg);
+}
+
+.month-nav__calendar {
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+}
+
 .month-nav__current {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.month-nav__now {
     font-weight: 700;
     font-size: 20px;
     color: #000000;
@@ -83,4 +108,54 @@ body {
     text-decoration: none;
     font-weight: 700;
     font-size: 16px;
+}
+
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
+    .attendance-list__content {
+        max-width: 1400px;
+        padding: 0 40px;
+    }
+
+    .attendance-list__heading {
+        font-size: 32px;
+        margin-bottom: 40px;
+    }
+
+    .attendance-list__month-nav {
+        padding: 10px 20px;
+        gap: 30px;
+    }
+
+    .month-nav__button {
+        font-size: 18px;
+        padding: 8px 18px;
+        gap: 10px;
+    }
+
+    .month-nav__arrow {
+        width: 24px;
+        height: 18px;
+    }
+
+    .month-nav__calendar {
+        width: 28px;
+        height: 28px;
+    }
+
+    .month-nav__now {
+        font-size: 22px;
+    }
+
+    .attendance-list__table {
+        font-size: 18px;
+    }
+
+    .attendance-list__table th,
+    .attendance-list__table td {
+        padding: 16px 12px;
+    }
+
+    .attendance-list__detail-link {
+        font-size: 18px;
+    }
 }

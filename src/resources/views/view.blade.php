@@ -23,23 +23,28 @@
         勤怠一覧
     </div>
 
-    {{-- 月切り替え --}}
     <div class="attendance-list__month-nav">
         @php
             $current = \Carbon\Carbon::parse($month);
             $prev = $current->copy()->subMonth()->format('Y-m');
             $next = $current->copy()->addMonth()->format('Y-m');
 
-            // 曜日日本語対応
             $weekDays = ['日', '月', '火', '水', '木', '金', '土'];
         @endphp
 
-        <a href="{{ url('/attendance/list?month='.$prev) }}" class="month-nav__button">←　前月</a>
-        <span class="month-nav__current">{{ $current->format('Y/m') }}</span>
-        <a href="{{ url('/attendance/list?month='.$next) }}" class="month-nav__button">翌月　→</a>
+        <a href="{{ url('/attendance/list?month='.$prev) }}" class="month-nav__button">
+            <img src="{{ asset('img/arrow.png') }}" class="month-nav__arrow" alt="前の月">前月
+        </a>
+        <div class="month-nav__current">
+            <img src="{{ asset('img/calendar.png') }}" alt="カレンダー" class="month-nav__calendar">
+            <span class="month-nav__now">{{ $current->format('Y/m') }}</span>
+        </div>
+        <a href="{{ url('/attendance/list?month='.$next) }}" class="month-nav__button">
+            翌月
+            <img src="{{ asset('img/arrow.png') }}" class="month-nav__arrow" alt="翌月">
+        </a>
     </div>
 
-    {{-- 勤怠一覧テーブル --}}
     <div class="attendance-list__table-wrapper">
         <table class="attendance-list__table">
             <thead>
@@ -57,7 +62,6 @@
                     @php
                         $record = $attendances->get($date->toDateString());
 
-                        // 休憩時間
                         $breakMinutes = 0;
                         if ($record && $record->breaks) {
                             foreach ($record->breaks as $break) {
@@ -67,7 +71,6 @@
                             }
                         }
 
-                        // 勤務時間計算（出勤〜退勤 − 休憩）
                         $totalMinutes = 0;
                         if ($record && $record->clock_in && $record->clock_out) {
                             $totalMinutes = \Carbon\Carbon::parse($record->clock_in)->diffInMinutes(\Carbon\Carbon::parse($record->clock_out)) - $breakMinutes;

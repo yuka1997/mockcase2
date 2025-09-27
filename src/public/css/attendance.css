@@ -94,29 +94,3 @@
         padding: 16px 0;
     }
 }
-
-
-@media screen and (min-width: 768px) and (max-width: 850px) {
-    .attendance__content {
-        max-width: 90%;
-        padding: 20px;
-    }
-
-    .attendance__date {
-        font-size: 28px;
-    }
-
-    .attendance__time {
-        font-size: 60px;
-    }
-
-    .attendance__button {
-        width: 160px;
-        font-size: 24px;
-        padding: 10px 0;
-    }
-
-    .attendance__button-group {
-        gap: 10px;
-    }
-}

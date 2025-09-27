@@ -19,8 +19,6 @@ class CreateRequestsTable extends Migration
             $table->foreignId('attendance_id')->constrained('attendances')->onDelete('cascade');
             $table->time('requested_clock_in')->nullable();
             $table->time('requested_clock_out')->nullable();
-            $table->time('requested_break_start')->nullable();
-            $table->time('requested_break_end')->nullable();
             $table->tinyInteger('status')->nullable(false);
             $table->text('requested_note')->nullable(false);
             $table->timestamps();
