@@ -2,46 +2,60 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request as HttpRequest;
-use Illuminate\Http\Request as HttpRequest;
-use App\Models\Request as AttendanceRequest;
+use Illuminate\Http\Request;
+use App\Http\Requests\CorrectionRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Models\StampCorrectionRequest;
 use App\Models\RequestBreak;
 
 class RequestController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $requests = AttendanceRequest::with(['attendance', 'requestBreaks'])
-            ->where('user_id', Auth::id())
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $status = $request->query('status', 'pending');
 
-        return view('request.index', compact('requests'));
+        $query = StampCorrectionRequest::with(['attendance', 'user'])
+            ->where('user_id', Auth::id());
+
+        if ($status === 'pending') {
+            $query->where('status', StampCorrectionRequest::STATUS_PENDING);
+        } elseif ($status === 'approved') {
+            $query->where('status', StampCorrectionRequest::STATUS_APPROVED);
+        } else {
+            $query->where('status', StampCorrectionRequest::STATUS_REJECTED);
+        }
+
+        $requests = $query->orderBy('created_at', 'desc')->get();
+
+        return view('requests', compact('requests'));
     }
 
-    public function store(HttpRequest $request)
+
+    public function store(CorrectionRequest $request)
     {
-        $newRequest = AttendanceRequest::create([
+        $newRequest = StampCorrectionRequest::create([
             'user_id'             => Auth::id(),
             'attendance_id'       => $request->attendance_id,
             'requested_clock_in'  => $request->requested_clock_in,
             'requested_clock_out' => $request->requested_clock_out,
-            'status' => AttendanceRequest::STATUS_PENDING,
+            'status'              => StampCorrectionRequest::STATUS_PENDING,
             'requested_note'      => $request->requested_note,
         ]);
 
-        if ($request->has('requested_breaks')) {
-            foreach ($request->requested_breaks as $break) {
+        $requestedBreaks = $request->input('requested_breaks', []);
+
+        foreach ($requestedBreaks as $break) {
+            // start か end のどちらかが入力されている場合のみ登録
+            if (!empty($break['start']) || !empty($break['end'])) {
                 RequestBreak::create([
-                    'request_id'           => $newRequest->id,
-                    'requested_break_start'=> $break['start'],
-                    'requested_break_end'  => $break['end'],
+                    'request_id'            => $newRequest->id,
+                    'requested_break_start' => $break['start'] ?? null,
+                    'requested_break_end'   => $break['end'] ?? null,
                 ]);
             }
         }
 
-        return redirect()->route('/detail', ['id' => $request->attendance_id])
+        return redirect()->to("/attendance/detail/{$request->attendance_id}")
             ->with('success', '打刻修正申請を送信しました。');
     }
 }

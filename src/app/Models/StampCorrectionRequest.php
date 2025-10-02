@@ -5,9 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Request extends Model
+class StampCorrectionRequest extends Model
 {
     use HasFactory;
+
+    protected $table = 'requests';
 
     const STATUS_PENDING  = 0;
     const STATUS_APPROVED = 1;

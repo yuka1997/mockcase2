@@ -28,6 +28,8 @@ Route::post('/login', function (LoginRequest $request) {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+
     Route::get('/attendance', [AttendanceController::class, 'index']);
     Route::post('/attendance', [AttendanceController::class, 'store']);
 
@@ -38,6 +40,4 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/stamp_correction_request/list', [RequestController::class, 'index']);
 
     Route::post('/requests', [RequestController::class, 'store']);
-
-    Route::post('/logout', [AuthController::class, 'logout']);
 });

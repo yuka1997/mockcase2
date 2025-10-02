@@ -1,7 +1,8 @@
-.body {
-    font-family: 'Inter', sans-serif;
+body {
+    background-color: #f0eded;
     margin: 0;
     padding: 0;
+    font-family: 'Inter', sans-serif;
 }
 
 .header {

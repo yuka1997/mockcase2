@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Attendance;
 use App\Models\BreakModel;
+use App\Models\StampCorrectionRequest;
 
 class AttendanceController extends Controller
 {
@@ -101,8 +102,11 @@ class AttendanceController extends Controller
     {
         $attendance = Attendance::with('breaks')->findOrFail($id);
 
-        return view('/detail', compact('attendance'));
+        $stampRequest = StampCorrectionRequest::where('attendance_id', $id)
+            ->where('user_id', Auth::id())
+            ->latest()
+            ->first();
+
+        return view('detail', compact('attendance', 'stampRequest'));
     }
-
-
 }
