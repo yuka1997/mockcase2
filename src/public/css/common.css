@@ -86,7 +86,8 @@ body {
 }
 
 .register__content,
-.login__content {
+.login__content,
+.admin-login__content {
     max-width: 680px;
     margin: 80px auto;
     padding: 0 20px;

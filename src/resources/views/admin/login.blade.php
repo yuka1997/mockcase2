@@ -1,11 +1,11 @@
 @extends('app')
 
 @section('content')
-<div class="login__content">
-    <div class="login__heading">
-        <h2 class="login__heading heading">ログイン</h2>
+<div class="admin-login__content">
+    <div class="admin-login__heading">
+        <h2 class="admin-login__heading heading">管理者ログイン</h2>
     </div>
-    <form method="POST" action="/login" class="form">
+    <form method="POST" action="/admin/login" class="form">
         @csrf
         <div class="form__group">
             <span class="form__label">メールアドレス</span>
@@ -36,11 +36,7 @@
         </div>
 
         <div class="form__actions">
-            <button type="submit" class="form__button">ログインする</button>
-        </div>
-
-        <div class="form__link">
-            <a href="/register">会員登録はこちら</a>
+            <button type="submit" class="form__button">管理者ログインする</button>
         </div>
     </form>
 </div>
