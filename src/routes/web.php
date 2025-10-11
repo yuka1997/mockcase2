@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\admin\AttendanceController as AdminAttendanceController;
+use App\Http\Controllers\admin\RequestController as AdminRequestController;
+use App\Http\Controllers\admin\UserController as AdminUserController;
 use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\RequestController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
@@ -64,10 +67,14 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::middleware(['auth'])->prefix('admin')->group(function () {
-    Route::get('/attendances', [AttendanceController::class, 'index']);
-    Route::get('/attendances/{id}', [AttendanceController::class, 'show']);
-    Route::get('/users', [UserController::class, 'index']);
-    Route::get('/users/{user}/attendances', [AttendanceController::class, 'index']);
-    Route::get('/requests', [RequestController::class, 'index']);
-    Route::match(['get','post'], '/requests/{id}', [RequestController::class, 'show']);
+    Route::get('/attendances', [AdminAttendanceController::class, 'index']);
+    Route::get('/attendances/{id}', [AdminAttendanceController::class, 'show']);
+    Route::put('/attendances/{id}', [AdminAttendanceController::class, 'update']);
+
+    // Route::get('/users', [AdminUserController::class, 'index'])
+    // Route::get('/users/{user}/attendances', [AttendanceController::class, 'index']);
+
+    // Route::get('/requests', [AdminRequestController::class, 'index'])
+
+    // Route::match(['get','post'], '/requests/{id}', [RequestController::class, 'show']);
 });

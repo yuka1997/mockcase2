@@ -40,14 +40,12 @@ class CorrectionRequest extends FormRequest
             $clockIn  = Carbon::createFromFormat('H:i', $this->input('requested_clock_in'));
             $clockOut = Carbon::createFromFormat('H:i', $this->input('requested_clock_out'));
 
-            // 出勤・退勤順序チェック（エラーは clock_in のみ）
             if ($clockIn->gte($clockOut)) {
                 $validator->errors()->add('requested_clock_in', '出勤時間もしくは退勤時間が不適切な値です');
             }
 
             $breaks = $this->input('requested_breaks', []);
             foreach ($breaks as $index => $break) {
-                // 休憩開始時間チェック（勤務時間外の場合のみ）
                 if (!empty($break['start'])) {
                     $breakStart = Carbon::createFromFormat('H:i', $break['start']);
                     if ($breakStart->lt($clockIn) || $breakStart->gt($clockOut)) {
@@ -55,7 +53,6 @@ class CorrectionRequest extends FormRequest
                     }
                 }
 
-                // 休憩終了時間チェック（勤務時間外の場合のみ）
                 if (!empty($break['end'])) {
                     $breakEnd = Carbon::createFromFormat('H:i', $break['end']);
                     if ($breakEnd->lt($clockIn) || $breakEnd->gt($clockOut)) {

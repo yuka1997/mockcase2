@@ -21,7 +21,8 @@
     flex-shrink: 0;
 }
 
-.attendance-list__month-nav {
+.attendance-list__month-nav,
+.attendance-list__day-nav {
     border-radius: 10px;
     background-color: #FFFFFF;
     display: flex;
@@ -32,7 +33,8 @@
     gap: 20px;
 }
 
-.month-nav__button {
+.month-nav__button,
+.day-nav__button {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -42,30 +44,35 @@
     font-weight: 700;
 }
 
-.month-nav__arrow {
+.month-nav__arrow,
+.day-nav__arrow {
     width: 20px;
     height: 15px;
     vertical-align: middle;
     opacity: 0.3;
 }
 
-.month-nav__button:last-child .month-nav__arrow {
+.month-nav__button:last-child .month-nav__arrow,
+.day-nav__button:last-child .day-nav__arrow {
     transform: rotate(180deg);
 }
 
-.month-nav__calendar {
+.month-nav__calendar,
+.day-nav__calendar {
     width: 25px;
     height: 25px;
     vertical-align: middle;
 }
 
-.month-nav__current {
+.month-nav__current,
+.day-nav__current {
     display: inline-flex;
     align-items: center;
     gap: 8px;
 }
 
-.month-nav__now {
+.month-nav__now,
+.day-nav__now {
     font-weight: 700;
     font-size: 20px;
     color: #000000;
@@ -120,23 +127,27 @@
         gap: 30px;
     }
 
-    .month-nav__button {
+    .month-nav__button,
+    .day-nav__button {
         font-size: 18px;
         padding: 8px 18px;
         gap: 10px;
     }
 
-    .month-nav__arrow {
+    .month-nav__arrow,
+    .day-nav__arrow {
         width: 24px;
         height: 18px;
     }
 
-    .month-nav__calendar {
+    .month-nav__calendar,
+    .day-nav__calendar {
         width: 28px;
         height: 28px;
     }
 
-    .month-nav__now {
+    .month-nav__now,
+    .day-nav__now {
         font-size: 22px;
     }
 
