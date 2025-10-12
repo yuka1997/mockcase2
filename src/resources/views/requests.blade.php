@@ -23,7 +23,6 @@
         申請一覧
     </div>
 
-    {{-- タブ切り替え --}}
     <div class="request-list__tab">
         <a href="?status=pending" class="request-list__tab-link {{ request('status','pending') == 'pending' ? 'active' : '' }}">承認待ち</a>
         <a href="?status=approved" class="request-list__tab-link {{ request('status') == 'approved' ? 'active' : '' }}">承認済み</a>
