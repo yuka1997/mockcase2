@@ -71,7 +71,12 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/attendances/{id}', [AdminAttendanceController::class, 'show']);
     Route::put('/attendances/{id}', [AdminAttendanceController::class, 'update']);
 
-    // Route::get('/users', [AdminUserController::class, 'index'])
+    Route::get('/users', [AdminUserController::class, 'index']);
+
+    Route::get('/users/{user}/attendances', [AdminAttendanceController::class, 'userAttendances']);
+
+    Route::get('/users/{user}/attendances/export', [AdminAttendanceController::class, 'exportCsv']);
+
     // Route::get('/users/{user}/attendances', [AttendanceController::class, 'index']);
 
     // Route::get('/requests', [AdminRequestController::class, 'index'])
