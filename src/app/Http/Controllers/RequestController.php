@@ -45,7 +45,6 @@ class RequestController extends Controller
         $requestedBreaks = $request->input('requested_breaks', []);
 
         foreach ($requestedBreaks as $break) {
-            // start か end のどちらかが入力されている場合のみ登録
             if (!empty($break['start']) || !empty($break['end'])) {
                 RequestBreak::create([
                     'request_id'            => $newRequest->id,

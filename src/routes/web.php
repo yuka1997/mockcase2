@@ -77,9 +77,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     Route::get('/users/{user}/attendances/export', [AdminAttendanceController::class, 'exportCsv']);
 
-    // Route::get('/users/{user}/attendances', [AttendanceController::class, 'index']);
+    Route::get('/requests', [AdminRequestController::class, 'index']);
+    // Route::get('/requests/{id}', [AdminRequestController::class, 'show']);
 
-    // Route::get('/requests', [AdminRequestController::class, 'index'])
-
-    // Route::match(['get','post'], '/requests/{id}', [RequestController::class, 'show']);
 });
