@@ -23,14 +23,22 @@ class RequestController extends Controller
 
         $requests = $query->orderBy('created_at', 'desc')->get();
 
-        return view('admin.requests', compact('requests', 'status'));
+        return view('/admin/requests', compact('requests', 'status'));
     }
 
     public function show($id)
     {
-        $requestData = StampCorrectionRequest::with(['attendance', 'user', 'requestedBreaks'])
+        $requestData = StampCorrectionRequest::with(['attendance', 'user', 'requestBreaks'])
             ->findOrFail($id);
 
-        return view('admin.request_detail', compact('requestData'));
+        return view('/admin/approval', compact('requestData'));
+    }
+
+    public function approve($id)
+    {
+        $requestData = StampCorrectionRequest::findOrFail($id);
+        $requestData->update(['status' => StampCorrectionRequest::STATUS_APPROVED]);
+
+        return redirect()->to('/admin/approval')->with('success', '申請を承認しました。');
     }
 }

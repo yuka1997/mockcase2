@@ -36,7 +36,7 @@ class StampCorrectionRequest extends Model
 
     public function requestBreaks()
     {
-        return $this->hasMany(RequestBreak::class);
+        return $this->hasMany(RequestBreak::class, 'request_id');
     }
 
 }

@@ -22,7 +22,6 @@
         <span class="heading-bar"></span>勤怠詳細
     </h2>
 
-    {{-- 修正完了メッセージ --}}
     @if (session('success'))
         <p class="attendance-detail__message">{{ session('success') }}</p>
     @endif

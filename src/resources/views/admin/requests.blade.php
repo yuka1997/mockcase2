@@ -48,8 +48,6 @@
                             承認待ち
                         @elseif($req->status == \App\Models\StampCorrectionRequest::STATUS_APPROVED)
                             承認済み
-                        @else
-                            拒否
                         @endif
                     </td>
                     <td>{{ $req->user->name }}</td>
@@ -57,7 +55,7 @@
                     <td>{{ $req->requested_note }}</td>
                     <td>{{ $req->created_at->format('Y/m/d') }}</td>
                     <td>
-                        <a href="{{ url('/admin/attendances/' . $req->attendance_id) }}" class="request-list__detail-link">詳細</a>
+                        <a href="{{ url('/admin/requests/' . $req->id) }}" class="request-list__detail-link">詳細</a>
                     </td>
                 </tr>
                 @endforeach

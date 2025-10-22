@@ -113,7 +113,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     margin-top: 30px;
 }
 
-.attendance-detail__button {
+.attendance-detail__button,
+.attendance-detail__approved {
     padding: 10px 20px;
     font-weight: 700;
     font-size: 16px;
@@ -123,6 +124,10 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     color: #FFFFFF;
     cursor: pointer;
     transition: 0.2s;
+}
+
+.attendance-detail__approved {
+    background-color: #696969;
 }
 
 .request-pending-message {
@@ -177,7 +182,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
         margin-top: 40px;
     }
 
-    .attendance-detail__button {
+    .attendance-detail__button,
+    .attendance-detail__approved {
         font-size: 18px;
         padding: 12px 24px;
         border-radius: 6px;
