@@ -5,7 +5,10 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\StampCorrectionRequest;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Attendance;
+use App\Models\RequestBreak;
+use App\Models\BreakModel;
+use Illuminate\Support\Facades\DB;
 
 class RequestController extends Controller
 {
@@ -36,9 +39,31 @@ class RequestController extends Controller
 
     public function approve($id)
     {
-        $requestData = StampCorrectionRequest::findOrFail($id);
-        $requestData->update(['status' => StampCorrectionRequest::STATUS_APPROVED]);
+        $requestData = StampCorrectionRequest::with(['attendance', 'requestBreaks'])->findOrFail($id);
 
-        return redirect()->to('/admin/approval')->with('success', '申請を承認しました。');
+        DB::transaction(function () use ($requestData) {
+
+            $attendance = $requestData->attendance;
+            $attendance->update([
+                'clock_in'  => $requestData->requested_clock_in,
+                'clock_out' => $requestData->requested_clock_out,
+                'note'      => $requestData->requested_note,
+            ]);
+
+            $attendance->breaks()->delete();
+
+            foreach ($requestData->requestBreaks as $reqBreak) {
+                $attendance->breaks()->create([
+                    'break_start' => $reqBreak->requested_break_start,
+                    'break_end'   => $reqBreak->requested_break_end,
+                ]);
+            }
+
+            $requestData->update([
+                'status' => StampCorrectionRequest::STATUS_APPROVED,
+            ]);
+        });
+
+        return redirect('/admin/requests/' . $id)->with('success', '申請を承認しました。');
     }
 }
