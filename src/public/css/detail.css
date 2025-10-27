@@ -72,11 +72,14 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     flex: 1;
 }
 
-.attendance-detail__value {
+.attendance-detail__value,
+.attendance-detail-pending {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 316px;
+    font-weight: 700;
+    font-size: 16px;
 }
 
 .attendance-detail__value.time-range input[type="time"] {
@@ -90,7 +93,8 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     box-sizing: border-box;
 }
 
-.attendance-detail__value.time-range .separator {
+.attendance-detail__value.time-range .separator,
+.attendance-detail-pending .separator {
     margin: 0 10px;
 }
 

@@ -51,21 +51,29 @@
                     <tr>
                         <th>出勤・退勤</th>
                         <td>
-                            <div class="attendance-detail__value time-range">
-                                <input type="time" name="requested_clock_in" value="{{ old('requested_clock_in', $attendance->clock_in ? substr($attendance->clock_in,0,5) : '') }}" @if($isPending) readonly class="readonly-input" @endif>
-                                <span class="separator">〜</span>
-                                <input type="time" name="requested_clock_out" value="{{ old('requested_clock_out', $attendance->clock_out ? substr($attendance->clock_out,0,5) : '') }}" @if($isPending) readonly class="readonly-input" @endif>
-                            </div>
-                            <div class="form__error">
-                                @error('requested_clock_in')
-                                {{ $message }}
-                                @enderror
-                            </div>
-                            <div class="form__error">
-                                @error('requested_clock_out')
-                                {{ $message }}
-                                @enderror
-                            </div>
+                            @if($isPending)
+                                <div class="attendance-detail-pending">
+                                    {{ substr($attendance->clock_in,0,5) }}
+                                    <span class="separator">〜</span>
+                                    {{ substr($attendance->clock_out,0,5) }}
+                                </div>
+                            @else
+                                <div class="attendance-detail__value time-range">
+                                    <input type="time" name="requested_clock_in" value="{{ old('requested_clock_in', $attendance->clock_in ? substr($attendance->clock_in,0,5) : '') }}">
+                                    <span class="separator">〜</span>
+                                    <input type="time" name="requested_clock_out" value="{{ old('requested_clock_out', $attendance->clock_out ? substr($attendance->clock_out,0,5) : '') }}">
+                                </div>
+                                <div class="form__error">
+                                    @error('requested_clock_in')
+                                    {{ $message }}
+                                    @enderror
+                                </div>
+                                <div class="form__error">
+                                    @error('requested_clock_out')
+                                    {{ $message }}
+                                    @enderror
+                                </div>
+                            @endif
                         </td>
                     </tr>
 
@@ -73,32 +81,41 @@
                     <tr>
                         <th>休憩{{ $index > 0 ? $index + 1 : '' }}</th>
                         <td>
-                            <div class="attendance-detail__value time-range">
-                                <input type="time" name="requested_breaks[{{ $index }}][start]" value="{{ old("requested_breaks.$index.start", $break->break_start ? substr($break->break_start,0,5) : '') }}" @if($isPending) readonly class="readonly-input" @endif>
-                                <span class="separator">〜</span>
-                                <input type="time" name="requested_breaks[{{ $index }}][end]" value="{{ old("requested_breaks.$index.end", $break->break_end ? substr($break->break_end,0,5) : '') }}" @if($isPending) readonly class="readonly-input" @endif>
-                            </div>
-                            <div class="form__error">
-                                @error('requested_breaks.*.start')
-                                {{ $message }}
-                                @enderror
-                            </div>
-                            <div class="form__error">
-                                @error('requested_breaks.*.end')
-                                {{ $message }}
-                                @enderror
-                            </div>
+                            @if($isPending)
+                                <div class="attendance-detail-pending">
+                                    {{ substr($break->break_start,0,5) }}
+                                    <span class="separator">〜</span>
+                                    {{ substr($break->break_end,0,5) }}
+                                </div>
+                            @else
+                                <div class="attendance-detail__value time-range">
+                                    <input type="time" name="requested_breaks[{{ $index }}][start]" value="{{ old("requested_breaks.$index.start", $break->break_start ? substr($break->break_start,0,5) : '') }}">
+                                    <span class="separator">〜</span>
+                                    <input type="time" name="requested_breaks[{{ $index }}][end]" value="{{ old("requested_breaks.$index.end", $break->break_end ? substr($break->break_end,0,5) : '') }}">
+                                </div>
+                                <div class="form__error">
+                                    @error('requested_breaks.*.start')
+                                    {{ $message }}
+                                    @enderror
+                                </div>
+                                <div class="form__error">
+                                    @error('requested_breaks.*.end')
+                                    {{ $message }}
+                                    @enderror
+                                </div>
+                            @endif
                         </td>
                     </tr>
                     @endforeach
 
+                    @unless($isPending)
                     <tr>
                         <th>休憩{{ $attendance->breaks->count() + 1 }}</th>
                         <td>
                             <div class="attendance-detail__value time-range">
-                                <input type="time" name="requested_breaks[new][start]" value="{{ old('requested_breaks.new.start') }}" @if($isPending) readonly class="readonly-input" @endif>
+                                <input type="time" name="requested_breaks[new][start]" value="{{ old('requested_breaks.new.start') }}">
                                 <span class="separator">〜</span>
-                                <input type="time" name="requested_breaks[new][end]" value="{{ old('requested_breaks.new.end') }}" @if($isPending) readonly class="readonly-input" @endif>
+                                <input type="time" name="requested_breaks[new][end]" value="{{ old('requested_breaks.new.end') }}">
                             </div>
                             <div class="form__error">
                                 @error('requested_breaks.*.start')
@@ -112,16 +129,23 @@
                             </div>
                         </td>
                     </tr>
+                    @endunless
 
                     <tr>
                         <th>備考</th>
                         <td>
-                            <textarea name="requested_note" @if($isPending) readonly class="readonly-input" @endif>{{ old('requested_note', $attendance->note) }}</textarea>
-                            <div class="form__error">
-                                @error('requested_note')
-                                {{ $message }}
-                                @enderror
-                            </div>
+                            @if($isPending)
+                                <div class="attendance-detail-pending">
+                                    {{ $attendance->note ?: '（なし）' }}
+                                </div>
+                            @else
+                                <textarea name="requested_note">{{ old('requested_note', $attendance->note) }}</textarea>
+                                <div class="form__error">
+                                    @error('requested_note')
+                                    {{ $message }}
+                                    @enderror
+                                </div>
+                            @endif
                         </td>
                     </tr>
                 </tbody>

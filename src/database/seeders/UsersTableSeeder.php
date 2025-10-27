@@ -28,5 +28,12 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('user123'),
             'role' => User::ROLE_USER,
         ]);
+
+        User::create([
+            'name' => '一般ユーザー2',
+            'email' => 'user2@example.com',
+            'password' => Hash::make('user123'),
+            'role' => User::ROLE_USER,
+        ]);
     }
 }
