@@ -31,11 +31,13 @@
     </div>
 
     @php
-    $today = now()->locale('ja');
+        $today = now();
+        $weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+        $dayOfWeek = $weekdays[$today->dayOfWeek];
     @endphp
 
     <div class="attendance__date">
-        {{ $today->isoFormat('Y年M月D日(ddd)') }}
+        {{ $today->format('Y年n月j日') }}({{ $dayOfWeek }})
     </div>
 
 

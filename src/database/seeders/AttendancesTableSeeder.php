@@ -40,19 +40,25 @@ class AttendancesTableSeeder extends Seeder
 
     public function createAttendanceWithBreak($userId, $date)
     {
+        $status = app()->environment('testing')
+        ? Attendance::STATUS_OFF
+        : Attendance::STATUS_DONE;
+
         $attendance = Attendance::create([
             'user_id' => $userId,
             'work_date' => $date->toDateString(),
-            'clock_in' => '09:00:00',
-            'clock_out' => '18:00:00',
-            'status' => Attendance::STATUS_DONE,
+            'clock_in' => $status === Attendance::STATUS_DONE ? '09:00:00' : null,
+            'clock_out' => $status === Attendance::STATUS_DONE ? '18:00:00' : null,
+            'status' => $status,
             'note' => 'ダミーデータ',
         ]);
 
-        BreakModel::create([
-            'attendance_id' => $attendance->id,
-            'break_start' => '12:00:00',
-            'break_end' => '13:00:00',
-        ]);
+        if ($status === Attendance::STATUS_DONE) {
+            BreakModel::create([
+                'attendance_id' => $attendance->id,
+                'break_start' => '12:00:00',
+                'break_end' => '13:00:00',
+            ]);
+        }
     }
 }
